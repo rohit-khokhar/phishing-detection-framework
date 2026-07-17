@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Intelligent Multi-Layered Phishing Detection Framework</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<body>
+
+<div class="background"></div>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <span>Cyber Shield AI</span>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#url">URL Detector</a>
+
+        <a href="#email">Email Detector</a>
+
+        <a href="#about">Project</a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+<header>
+
+    <h1>
+
+        <i class="fa-solid fa-user-shield"></i>
+
+        Intelligent Multi-Layered
+
+        <br>
+
+        Phishing Detection Framework
+
+    </h1>
+
+    <p>
+
+        Machine Learning • Behavioral Analysis • Flask
+
+    </p>
+
+</header>
+
+<div class="cards">
+
+<!-- ==================================================== -->
+<!-- URL DETECTOR -->
+<!-- ==================================================== -->
+
+<div class="card" id="url">
+
+<h2>
+
+<i class="fa-solid fa-link"></i>
+
+URL Detector
+
+</h2>
+
+<form
+action="/predict_url"
+method="POST"
+onsubmit="showLoader('url-loader')">
+
+<input
+type="text"
+id="urlInput"
+name="url"
+placeholder="Paste Website URL"
+required>
+
+<div class="sample-buttons">
+
+<button
+type="button"
+class="sample-btn"
+onclick="fillSafeURL()">
+
+Safe URL
+
+</button>
+
+<button
+type="button"
+class="sample-btn danger"
+onclick="fillPhishingURL()">
+
+Phishing URL
+
+</button>
+
+</div>
+
+<button type="submit">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Detect URL
+
+</button>
+
+<div
+id="url-loader"
+class="loader">
+
+<i class="fa-solid fa-spinner fa-spin"></i>
+
+Analyzing URL...
+
+</div>
+
+</form>
+
+{% if url_result %}
+
+<div class="result {% if url_result.prediction == 'Phishing' %}phishing{% else %}safe{% endif %}">
+
+<h3>
+
+{% if url_result.prediction == "Phishing" %}
+
+⚠️ PHISHING WEBSITE
+
+{% elif url_result.prediction == "Legitimate" %}
+
+✅ LEGITIMATE WEBSITE
+
+{% else %}
+
+❌ ERROR
+
+{% endif %}
+
+</h3>
+
+{% if url_result.message %}
+
+<div class="error-box">
+
+{{ url_result.message }}
+
+</div>
+
+{% endif %}
+
+<p>
+
+<strong>Prediction :</strong>
+
+{{ url_result.prediction }}
+
+</p>
+
+<p>
+<strong>Confidence :</strong>
+{{ url_result.confidence }}%
+</p>
+
+<div class="progress">
+    <div class="progress-bar"
+         style="width: {{ url_result.confidence }}%;">
+    </div>
+</div>
+
+<p>
+
+<strong>Risk Level :</strong>
+
+{% if url_result.prediction == "Phishing" %}
+
+    {% if url_result.confidence >= 80 %}
+
+        <span class="badge high">High</span>
+
+    {% elif url_result.confidence >= 50 %}
+
+        <span class="badge medium">Medium</span>
+
+    {% else %}
+
+        <span class="badge low">Low</span>
+
+    {% endif %}
+
+{% else %}
+
+    <span class="badge low">Safe</span>
+
+{% endif %}
+
+</p>
+
+<a href="{{ url_for('download_report') }}" class="download-btn">
+    📄 Download PDF Report
+</a>
+
+</div>
+
+{% endif %}
+
+
+</div>
+<!-- END URL CARD -->
+
+
+<!-- ==================================================== -->
+<!-- EMAIL DETECTOR -->
+<!-- ==================================================== -->
+
+<div class="card" id="email">
+
+<h2>
+
+<i class="fa-solid fa-envelope"></i>
+
+Email Detector
+
+</h2>
+
+<form
+action="/predict_email"
+method="POST"
+onsubmit="showLoader('email-loader')">
+
+<textarea
+id="emailInput"
+name="email"
+rows="10"
+placeholder="Paste Email Content Here..."
+required></textarea>
+
+<div class="sample-buttons">
+
+<button
+type="button"
+class="sample-btn"
+onclick="fillSampleEmail()">
+
+Sample Email
+
+</button>
+
+<button
+type="button"
+class="sample-btn danger"
+onclick="clearEmail()">
+
+Clear
+
+</button>
+
+</div>
+
+<button type="submit">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+Detect Email
+
+</button>
+
+<div
+id="email-loader"
+class="loader">
+
+<i class="fa-solid fa-spinner fa-spin"></i>
+
+Analyzing Email...
+
+</div>
+
+</form>
+
+{% if email_result %}
+
+<div class="result {% if email_result.prediction == 'Phishing' %}phishing{% else %}safe{% endif %}">
+
+<h3>
+
+{% if email_result.prediction == "Phishing" %}
+
+⚠️ PHISHING EMAIL
+
+{% elif email_result.prediction == "Legitimate" %}
+
+✅ LEGITIMATE EMAIL
+
+{% else %}
+
+❌ ERROR
+
+{% endif %}
+
+</h3>
+
+{% if email_result.message %}
+
+<div class="error-box">
+
+{{ email_result.message }}
+
+</div>
+
+{% endif %}
+
+<p>
+
+<strong>Prediction :</strong>
+
+{{ email_result.prediction }}
+
+</p>
+
+<p>
+
+<strong>Confidence :</strong>
+
+{{ email_result.confidence }}%
+
+</p>
+
+<div class="progress">
+    <div class="progress-bar"
+         style="width: {{ email_result.confidence }}%;">
+    </div>
+</div>
+
+<p>
+
+<strong>Risk Level :</strong>
+
+{% if email_result.prediction == "Phishing" %}
+
+    {% if email_result.confidence >= 80 %}
+
+        <span class="badge high">High</span>
+
+    {% elif email_result.confidence >= 50 %}
+
+        <span class="badge medium">Medium</span>
+
+    {% else %}
+
+        <span class="badge low">Low</span>
+
+    {% endif %}
+
+{% else %}
+
+    <span class="badge low">Safe</span>
+
+{% endif %}
+
+</p>
+
+<a href="{{ url_for('download_report') }}" class="download-btn">
+    <i class="fa-solid fa-file-arrow-down"></i>
+    Download PDF Report
+</a>
+
+</div>
+
+{% endif %}
+
+ 
+
+</div>
+
+<!-- END EMAIL CARD -->
+
+</div>
+
+<!-- END CARDS -->
+
+<!-- ==================================================== -->
+<!-- PROJECT INFORMATION -->
+<!-- ==================================================== -->
+
+<section class="project-info" id="about">
+
+<h2>
+
+<i class="fa-solid fa-circle-info"></i>
+
+Project Information
+
+</h2>
+
+<div class="info-grid">
+
+<div class="info-card">
+
+<h3>
+
+<i class="fa-solid fa-brain"></i>
+
+Model Used
+
+</h3>
+
+<ul>
+
+<li><strong>URL:</strong> Stacking Ensemble (Lexical Features)</li>
+
+<li><strong>Email:</strong> Stacking Ensemble (TF-IDF + Handcrafted Features)</li>
+
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>
+
+<i class="fa-solid fa-database"></i>
+
+Datasets
+
+</h3>
+
+<ul>
+
+<li>PhiUSIIL URL Dataset</li>
+
+<li>Phishing Email Dataset</li>
+
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>
+
+<i class="fa-solid fa-code"></i>
+
+Technology Stack
+
+</h3>
+
+<ul>
+
+<li>Python</li>
+
+<li>Flask</li>
+
+<li>Scikit-Learn</li>
+
+<li>HTML • CSS • JavaScript</li>
+
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+Developed For
+
+</h3>
+
+<p>
+
+RV University Summer Internship 2026
+
+</p>
+
+<p>
+
+Intelligent Multi-Layered Phishing Detection Framework using Machine Learning & Behavioral Analysis
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==================================================== -->
+<!-- FOOTER -->
+<!-- ==================================================== -->
+
+<footer>
+
+<hr>
+
+<p>
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Intelligent Multi-Layered Phishing Detection Framework
+
+</p>
+
+<p>
+
+Developed using Machine Learning, Flask & Behavioral Analysis
+
+</p>
+
+<p>
+
+© 2026 RV University Summer Internship Project
+
+</p>
+
+</footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
