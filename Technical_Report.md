@@ -1,27 +1,82 @@
-# An Intelligent Multi-Layered Phishing Detection Framework using Machine Learning and Behavioral Analysis
+# Technical Report
 
-## Project Context
+## Intelligent Multi-Layered Phishing Detection Framework using Machine Learning and Behavioral Analysis
 
-This repository documents the machine learning component of a multi-layered phishing detection system. It covers dataset finalization, preprocessing, feature engineering, model training, hyperparameter tuning, stacking ensemble construction, explainability, and evaluation — developed end-to-end in Google Colab.
 
-**Assigned responsibilities (from project task card):**
-- Finalize dataset
-- Handle preprocessing
+## Project Overview
+
+This repository contains the complete implementation and technical documentation for the **Intelligent Multi-Layered Phishing Detection Framework using Machine Learning and Behavioral Analysis**.
+
+The project aims to detect phishing attacks through two independent detection modules:
+
+- **URL Phishing Detection** using lexical and structural URL features.
+- **Email Phishing Detection** using TF-IDF and handcrafted email features.
+
+The project combines machine learning, feature engineering, explainable AI, and a Flask-based web application to provide an efficient and user-friendly phishing detection system.
+
+### Project Objectives
+
+- Develop an intelligent phishing detection framework.
+- Detect phishing URLs using Machine Learning.
+- Detect phishing emails using Machine Learning.
+- Compare multiple Machine Learning algorithms.
+- Improve prediction performance using a stacking ensemble.
+- Provide explainable predictions using SHAP.
+- Deploy the trained models through a Flask web application.
+- Display prediction confidence and risk level.
+- Generate downloadable PDF reports for prediction results.
+
+### Team Responsibilities
+
+### Shankha Suvro Dutta
+**Responsibilities**
+- Dataset preparation
+- Data preprocessing
 - Feature engineering
-- Train ML models — Random Forest, XGBoost, LightGBM, CatBoost
+- Machine Learning model training
 - Hyperparameter tuning
-- Generate evaluation metrics
+- Model evaluation
 
-**Required deliverables:**
-- Clean dataset
-- Feature-engineered dataset
-- Trained models
-- Accuracy comparison table
-- Confusion matrix
-- ROC curve
-- Precision, Recall, F1 score
+---
 
-**Additional goal set by professor:** develop a methodology that is *not* already present in the reviewed literature, so the work is publishable rather than a straightforward reproduction of existing approaches.
+### Rohit Khokhar
+**Responsibilities**
+- Flask web application development
+- Integration of trained ML models
+- URL phishing detection interface
+- Email phishing detection interface
+- Prediction result visualization
+- Confidence score and risk level display
+- PDF report generation
+- Deployment and testing
+
+---
+
+### Ranjeet Kumar Pandey
+**Assigned Responsibilities (In Progress)**
+- Literature survey
+- Research paper writing
+- Final project report preparation
+- Presentation (PPT) preparation
+- Project demonstration
+- GitHub documentation
+
+> **Note:** The above responsibilities are currently in progress and will be updated upon completion.
+
+### Deliverables Completed
+
+- Clean and feature-engineered datasets
+- Trained Machine Learning models
+- Flask-based web application
+- URL phishing detection module
+- Email phishing detection module
+- Confidence score and risk level display
+- PDF report generation
+- Model evaluation metrics
+- Confusion Matrix
+- ROC Curve
+- Accuracy comparison
+- Precision, Recall and F1-score
 
 ---
 
@@ -274,65 +329,175 @@ All trained independently across three feature sets: `URL_Lexical`, `URL_Full`, 
 
 ---
 
-## 10. Deployment Handoff (for the Website/Frontend Teammate)
+## 10. Deployment
 
-The trained models are not meant to be used from inside the Colab notebook. A `deploy_artifacts/` folder was exported from Google Drive containing:
+The trained machine learning models were successfully integrated into a Flask-based web application to enable real-time phishing detection for both URLs and emails.
 
-```
-deploy_artifacts/
-├── URL_Lexical_StackingEnsemble.pkl
-├── Email_StackingEnsemble.pkl
-├── tfidf_vectorizer_clean.pkl
-├── url_feature_columns.pkl
-├── email_feature_columns.pkl
-└── version_info.json
-```
+### Deployment Features
 
-Alongside this, a standalone `feature_engineering.py` module was extracted from the notebook (via Colab's `%%writefile` magic), containing the exact preprocessing/feature-extraction functions (`extract_url_features`, `extract_email_features`, `clean_for_tfidf`) needed to convert a raw URL or email into the same feature format the models were trained on.
+- URL Phishing Detection
+- Email Phishing Detection
+- Confidence Score Display
+- Risk Level Classification
+- PDF Report Generation
+- Responsive User Interface
+- Error Handling and Input Validation
 
-**Recommended website project structure:**
+### Project Structure
 
 ```
-phishing-detector-website/
+Intelligent-Multi-Layered-Phishing-Detection/
 │
-├── app/
-│   ├── app.py                      # Flask entrypoint (or streamlit_app.py)
-│   ├── feature_engineering.py      # must match training exactly
-│   ├── model_loader.py
-│   ├── models/                     # deploy_artifacts/ contents go here
-│   ├── templates/                  # Flask HTML pages
-│   ├── static/                     # Flask CSS/JS
-│   └── utils/
-│       └── explain.py              # optional SHAP-based per-prediction explanation
-│
-├── notebooks/
-│   └── training_pipeline.ipynb     # original Colab notebook, kept for reference
-│
+├── app.py
+├── predictor.py
+├── feature_engineering.py
+├── config.py
 ├── requirements.txt
 ├── README.md
-└── .gitignore
+├── Technical_Report.md
+├── .gitignore
+│
+├── models/
+│   ├── URL_Lexical_StackingEnsemble.pkl
+│   ├── Email_StackingEnsemble.pkl
+│   ├── tfidf_vectorizer_clean.pkl
+│   ├── url_feature_columns.pkl
+│   └── email_feature_columns.pkl
+│
+├── saved_features/
+│
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── templates/
+│   └── index.html
+│
+└── screenshots/
 ```
 
-**Critical rule for any future modification:** the `.pkl` model files cannot be edited directly — they are frozen trained snapshots. To change the model itself, retrain from a **copy** of the original Colab notebook (never edit the original directly), then re-run the export cell to produce updated artifacts. If the feature set changes in any way (added/removed/reordered columns), `feature_engineering.py` in the website **must** be updated to match exactly, or the app will silently produce incorrect predictions without throwing an error.
+### Deployment Workflow
+
+1. User enters a URL or Email.
+2. Flask receives the request.
+3. Feature Engineering extracts the required features.
+4. The trained Stacking Ensemble model performs prediction.
+5. Prediction, confidence score and risk level are displayed.
+6. Users can download a PDF report containing the prediction details.
 
 ---
 
-## 11. Environment / Libraries Used
+## 11. Environment and Technologies Used
 
-- Python (Google Colab)
-- `pandas`, `numpy`, `matplotlib`, `seaborn`
-- `scikit-learn` (RandomForest, StackingClassifier, TfidfVectorizer, train_test_split, metrics)
-- `xgboost`, `lightgbm`, `catboost`
-- `optuna` (hyperparameter tuning)
-- `shap` (explainability)
-- `imbalanced-learn` (installed for SMOTE; class imbalance handling)
-- `kagglehub` (dataset download)
-- `scipy.sparse` (sparse matrix handling for TF-IDF + handcrafted feature fusion)
+### Programming Language
+
+- Python
+
+### Backend
+
+- Flask
+
+### Machine Learning
+
+- Scikit-learn
+- XGBoost
+- LightGBM
+- CatBoost
+
+### Data Processing
+
+- Pandas
+- NumPy
+- SciPy
+
+### Feature Engineering
+
+- TF-IDF Vectorizer
+- Custom URL Lexical Features
+- Handcrafted Email Features
+
+### Explainability
+
+- SHAP
+
+### Hyperparameter Optimization
+
+- Optuna
+
+### Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap
+- Font Awesome
+
+### Report Generation
+
+- ReportLab
+
+### Development Environment
+
+- Google Colab
+- Visual Studio Code
 
 ---
 
-## 12. Team
+## 12. Team Members
 
-**Shankha Suvro Dutta** — Dataset finalization, preprocessing, feature engineering, model training (Random Forest, XGBoost, LightGBM, CatBoost), hyperparameter tuning, evaluation metrics generation.
+### Rohit Khokhar
 
-*(Other team members' sections — behavioral analysis layer, website/frontend, etc. — to be added by respective owners.)*
+**Responsibilities**
+
+- Flask Web Application Development
+- Integration of Trained Machine Learning Models
+- URL Phishing Detection Interface
+- Email Phishing Detection Interface
+- Frontend Development (HTML, CSS and JavaScript)
+- Prediction Result Visualization
+- Confidence Score and Risk Level Display
+- PDF Report Generation
+- Application Testing and Deployment
+
+---
+
+### Shankha Suvro Dutta
+
+**Responsibilities**
+
+- Dataset Preparation
+- Data Preprocessing
+- Feature Engineering
+- Machine Learning Model Development
+- Hyperparameter Tuning
+- Model Evaluation
+- Stacking Ensemble Development
+- Explainability using SHAP
+
+---
+
+### Ranjeet Kumar Pandey
+
+**Status:** Pending
+
+**Assigned Responsibilities**
+
+- Literature Survey
+- Research Paper Writing
+- Final Project Report
+- Presentation (PPT)
+- Demo Preparation
+- GitHub Documentation
+
+*This section will be updated after completion of the assigned work.*
+
+---
+
+## 13. Conclusion
+
+The **Intelligent Multi-Layered Phishing Detection Framework using Machine Learning and Behavioral Analysis** successfully combines machine learning techniques with a Flask-based web application to provide real-time phishing detection for both URLs and emails.
+
+The system utilizes feature engineering, stacking ensemble learning, and explainable AI to improve detection performance while providing users with prediction confidence, risk assessment, and downloadable PDF reports.
+
+Future enhancements include integration with real-time threat intelligence services, domain reputation analysis, continuous model retraining using updated phishing datasets, and advanced behavioral analysis for improved detection accuracy.

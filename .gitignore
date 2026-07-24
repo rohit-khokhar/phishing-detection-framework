@@ -10,3 +10,5 @@ venv/
 .vscode/
 .DS_Store
 Thumbs.db
+models/splits.pkl
+models/splits_final.pkl
