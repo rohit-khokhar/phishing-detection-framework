@@ -26,42 +26,37 @@ The project combines machine learning, feature engineering, explainable AI, and 
 - Display prediction confidence and risk level.
 - Generate downloadable PDF reports for prediction results.
 
-### Team Responsibilities
+## Team Responsibilities
+
+### Rohit Khokhar
+**Responsibilities**
+- Flask web application development
+- Integration of trained Machine Learning models
+- URL phishing detection module development
+- Email phishing detection module development
+- User interface development (HTML, CSS, and JavaScript)
+- Prediction result visualization
+- Confidence score and risk level display
+- PDF report generation
+- Application testing and debugging
+- Deployment of the web application
+- GitHub repository management
+- Preparation of the complete internship report in LaTeX
+- Exporting the final LaTeX project and report PDF
+
+---
 
 ### Shankha Suvro Dutta
 **Responsibilities**
-- Dataset preparation
+- Literature survey and background research
+- Dataset collection and preparation
 - Data preprocessing
 - Feature engineering
 - Machine Learning model training
 - Hyperparameter tuning
 - Model evaluation
-
----
-
-### Rohit Khokhar
-**Responsibilities**
-- Flask web application development
-- Integration of trained ML models
-- URL phishing detection interface
-- Email phishing detection interface
-- Prediction result visualization
-- Confidence score and risk level display
-- PDF report generation
-- Deployment and testing
-
----
-
-### Ranjeet Kumar Pandey
-**Assigned Responsibilities (In Progress)**
-- Literature survey
-- Research paper writing
-- Final project report preparation
-- Presentation (PPT) preparation
-- Project demonstration
-- GitHub documentation
-
-> **Note:** The above responsibilities are currently in progress and will be updated upon completion.
+- Generation of plagiarism reports (Similarity Report and AI Report)
+- Preparation of the project presentation (PPT) in LaTeX
 
 ### Deliverables Completed
 
@@ -452,13 +447,16 @@ Intelligent-Multi-Layered-Phishing-Detection/
 
 - Flask Web Application Development
 - Integration of Trained Machine Learning Models
-- URL Phishing Detection Interface
-- Email Phishing Detection Interface
-- Frontend Development (HTML, CSS and JavaScript)
+- URL Phishing Detection Module
+- Email Phishing Detection Module
+- Frontend Development (HTML, CSS, and JavaScript)
 - Prediction Result Visualization
 - Confidence Score and Risk Level Display
 - PDF Report Generation
-- Application Testing and Deployment
+- Application Testing, Debugging, and Deployment
+- GitHub Repository Management
+- Preparation of the Final Internship Report in LaTeX
+- Export of the Final LaTeX Project and Report PDF
 
 ---
 
@@ -466,7 +464,8 @@ Intelligent-Multi-Layered-Phishing-Detection/
 
 **Responsibilities**
 
-- Dataset Preparation
+- Literature Survey and Background Research
+- Dataset Collection and Preparation
 - Data Preprocessing
 - Feature Engineering
 - Machine Learning Model Development
@@ -474,23 +473,8 @@ Intelligent-Multi-Layered-Phishing-Detection/
 - Model Evaluation
 - Stacking Ensemble Development
 - Explainability using SHAP
-
----
-
-### Ranjeet Kumar Pandey
-
-**Status:** Pending
-
-**Assigned Responsibilities**
-
-- Literature Survey
-- Research Paper Writing
-- Final Project Report
-- Presentation (PPT)
-- Demo Preparation
-- GitHub Documentation
-
-*This section will be updated after completion of the assigned work.*
+- Generation of Plagiarism Reports (Similarity Report and AI Report)
+- Preparation of the Project Presentation (PPT) in LaTeX
 
 ---
 
